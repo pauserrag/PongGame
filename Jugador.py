@@ -1,17 +1,18 @@
+from objecte_escenari import ObjecteEscenari
+from Constants import Constants
 import pygame
-import Constants
 
-class Jugador:
+class Jugador(ObjecteEscenari):
     def __init__(self, posX, posY, color):
-        self.posX = posX
-        self.posY = posY
-        self.color = color
-        self.velocitat = Constants.Constants.VELOCITAT_JUGADOR
+        super().__init__(posX, posY, color)
+        self.velocitat = Constants.VELOCITAT_JUGADOR
+        self.amplada = Constants.AMPLADA_JUGADOR
+        self.alçada = Constants.ALÇADA_JUGADOR
 
     def mou(self, direccio):
         nova_posY = self.posY + (direccio * self.velocitat)
-        if Constants.Constants.MARGE_SUPERIOR_INFERIOR <= nova_posY <= Constants.Constants.ALÇADA_FINESTRA - Constants.Constants.MARGE_SUPERIOR_INFERIOR - Constants.Constants.ALÇADA_JUGADOR:
+        if Constants.MARGE_SUPERIOR_INFERIOR <= nova_posY <= Constants.ALÇADA_FINESTRA - Constants.MARGE_SUPERIOR_INFERIOR - self.alçada:
             self.posY = nova_posY
 
     def pinta(self, pantalla):
-        pygame.draw.rect(pantalla, self.color, (self.posX, self.posY, Constants.Constants.AMPLADA_JUGADOR, Constants.Constants.ALÇADA_JUGADOR))
+        pygame.draw.rect(pantalla, self.color, (self.posX, self.posY, self.amplada, self.alçada))
