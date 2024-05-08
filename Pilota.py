@@ -17,21 +17,27 @@ class Pilota(ObjecteEscenari):
         if self.posY <= Constants.MARGE_SUPERIOR_INFERIOR + self.radi or self.posY >= Constants.ALÇADA_FINESTRA - Constants.MARGE_SUPERIOR_INFERIOR - self.radi:
             self.velY *= -1
 
-        if self.posX <= jugador1.posX + jugador1.amplada + self.radi and \
-                jugador1.posY <= self.posY <= jugador1.posY + jugador1.alçada:
+        if self.posX <= jugador1.posX + jugador1.amplada + self.radi and                 jugador1.posY <= self.posY <= jugador1.posY + jugador1.alçada:
             self.velX *= -1
             self.velX *= 1.5
 
-        if self.posX >= jugador2.posX - self.radi and \
-                jugador2.posY <= self.posY <= jugador2.posY + jugador2.alçada:
+        if self.posX >= jugador2.posX - self.radi and                 jugador2.posY <= self.posY <= jugador2.posY + jugador2.alçada:
             self.velX *= -1
             self.velX *= 1.5
 
-        if self.posX <= 0 or self.posX >= Constants.AMPLADA_FINESTRA:
-            self.posX = Constants.AMPLADA_FINESTRA // 2
-            self.posY = Constants.ALÇADA_FINESTRA // 2
-            self.velX = random.choice([-1, 1]) * random.uniform(1, 3)
-            self.velY = random.choice([-1, 1]) * random.uniform(1, 3)
+        # Update player scores and reset ball when it touches the horizontal boundaries
+        if self.posX <= 0:
+            jugador2.punts += 1
+            self.reset()
+        elif self.posX >= Constants.AMPLADA_FINESTRA:
+            jugador1.punts += 1
+            self.reset()
+
+    def reset(self):
+        self.posX = Constants.AMPLADA_FINESTRA // 2
+        self.posY = Constants.ALÇADA_FINESTRA // 2
+        self.velX = random.choice([-1, 1]) * random.uniform(1, 3)
+        self.velY = random.choice([-1, 1]) * random.uniform(1, 3)
 
     def pinta(self, pantalla):
         pygame.draw.circle(pantalla, self.color, (int(self.posX), int(self.posY)), self.radi)

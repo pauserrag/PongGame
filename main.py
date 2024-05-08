@@ -10,14 +10,11 @@ finestraJoc = pygame.display.set_mode((Constants.AMPLADA_FINESTRA, Constants.AL�
 rellotge = pygame.time.Clock()
 gameOver = False
 
-jugador1 = Jugador(Constants.DISTANCIA_JUGADOR,
-                   Constants.ALÇADA_FINESTRA // 2 - Constants.ALÇADA_JUGADOR // 2,
-                   Constants.COLOR_JUGADOR1)
-jugador2 = Jugador(
-    Constants.AMPLADA_FINESTRA - Constants.DISTANCIA_JUGADOR - Constants.AMPLADA_JUGADOR,
-    Constants.ALÇADA_FINESTRA // 2 - Constants.ALÇADA_JUGADOR // 2,
-    Constants.COLOR_JUGADOR2)
+jugador1 = Jugador(Constants.DISTANCIA_JUGADOR, Constants.ALÇADA_FINESTRA // 2 - Constants.ALÇADA_JUGADOR // 2, Constants.COLOR_JUGADOR1)
+jugador2 = Jugador(Constants.AMPLADA_FINESTRA - Constants.DISTANCIA_JUGADOR - Constants.AMPLADA_JUGADOR, Constants.ALÇADA_FINESTRA // 2 - Constants.ALÇADA_JUGADOR // 2, Constants.COLOR_JUGADOR2)
 pilota = Pilota()
+
+fontText = pygame.font.SysFont("monospace", 15, bold=True)
 
 class CuadradoVerde(ObjecteEscenari):
     def __init__(self):
@@ -39,12 +36,19 @@ def pintaObjectes():
     jugador2.pinta(finestraJoc)
     pilota.pinta(finestraJoc)
 
+    textJugador1 = "Jugador 1: " + str(jugador1.punts)
+    etiquetaJugador1 = fontText.render(textJugador1, 1, (255, 255, 255))
+    finestraJoc.blit(etiquetaJugador1, (10, 5))
+
+    textJugador2 = "Jugador 2: " + str(jugador2.punts)
+    etiquetaJugador2 = fontText.render(textJugador2, 1, (255, 255, 255))
+    finestraJoc.blit(etiquetaJugador2, (Constants.AMPLADA_FINESTRA - 130, 5))
+
 def detectaEvents():
     for event in pygame.event.get():
-        if event.type == pygame.QUIT:
+        if event.type is pygame.QUIT:
             pygame.quit()
             sys.exit()
-
     keys = pygame.key.get_pressed()
     if keys[pygame.K_w]:
         jugador1.mou(-1)

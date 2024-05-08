@@ -8,6 +8,7 @@ class Jugador(ObjecteEscenari):
         self.velocitat = Constants.VELOCITAT_JUGADOR
         self.amplada = Constants.AMPLADA_JUGADOR
         self.alçada = Constants.ALÇADA_JUGADOR
+        self.punts = 0
 
     def mou(self, direccio):
         nova_posY = self.posY + (direccio * self.velocitat)
